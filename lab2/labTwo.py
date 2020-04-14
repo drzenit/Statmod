@@ -1,4 +1,6 @@
 import random
+import matplotlib.pyplot as plt
+from scipy.stats import uniform
 
 
 # Генерация n случайных вещественных чисел [0,1]
