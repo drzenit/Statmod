@@ -3,7 +3,7 @@ from math import sqrt
 import matplotlib.pyplot as plt
 from matplotlib import pyplot
 from scipy.stats import uniform
-from statsmodels.graphics.tsaplots import plot_pacf, plot_acf
+from statsmodels.graphics.tsaplots import plot_pacf
 from prettytable import PrettyTable
 
 
