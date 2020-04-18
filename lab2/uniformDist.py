@@ -10,15 +10,10 @@ class UniformDist:
         self.lowLimit = lowLimit
         self.upLimit = upLimit
 
-    def IRNUNI(self, ILOW: int, IUP: int, floatNum: float):
-        r = (IUP - ILOW + 1) * floatNum + ILOW
-
-        return round(r)
-
     def createIntList(self):
         intNumbList = list()
         for i in self.numbList:
-            IR = self.IRNUNI(self.lowLimit, self.upLimit, i)
+            IR = commonFunc.IRNUNI(self.lowLimit, self.upLimit, i)
             intNumbList.append(IR)
 
         return intNumbList
