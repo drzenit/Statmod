@@ -7,8 +7,9 @@ class BinomialDist():
         self.numbList = commonFunc.generateRandomList(self.n)
         self.N = N
         self.p = p
+        self.binomList = list()
         for i in self.numbList:
-            self.binomList = commonFunc.IRNUNI(0, self.N, i)
+            self.binomList.append(commonFunc.IRNUNI(0, self.N, i))
 
 a = BinomialDist(1000, 10, 0.5)
 
