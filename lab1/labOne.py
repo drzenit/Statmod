@@ -60,7 +60,7 @@ def getAutocorrelation(numbList, matExpec, n):
 
 # Задание 3.2: Построение коррелограммы
 def grapgColerrogram(autoCorr, lagsPar):
-    plot_pacf(autoCorr, lags=lagsPar, alpha=None)  # Функция из изменена, коррелограмма строиться по полученным значениям autoCorr
+    plot_pacf(autoCorr, lags=lagsPar, alpha=None)  # Функция из библиотеки изменена, коррелограмма строится по полученным значениям autoCorr
     pyplot.show()
 
 # Задание 4.1: Построение функции плотности распределения
