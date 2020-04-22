@@ -112,7 +112,7 @@ class BinomialDist():
         elif (self.method == "BIN"):
             binsPar = 10
         fig, ax = plt.subplots(figsize=(14, 7))
-        sns.distplot(a.createBinomList(), bins = binsPar, label='simulation results')
+        sns.distplot(self.binomList, bins = binsPar, label='simulation results')
         ax.set_xlabel("Number of Heads", fontsize=16)
         ax.set_ylabel("Frequency", fontsize=16)
 
