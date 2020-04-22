@@ -1,6 +1,8 @@
 from math import log
-
 from prettytable import PrettyTable
+from scipy.stats import geom
+import seaborn as sns
+import matplotlib.pyplot as plt
 
 from lab2 import commonFunc
 
@@ -80,6 +82,19 @@ class GeometricDist():
         resultTable.add_row(["M = \n D = ", "%f\n%f" % (matExpec1, dispersion1), "%f\n%f" % (matExpec2, dispersion2), "%f\n%f" % (matExpec3, dispersion3), "%f\n%f" % (2, 2.2)])
         print(resultTable)
 
+    def graphBinomDist(self):
+        #  Практика
+        fig, ax = plt.subplots(figsize=(14, 7))
+        sns.distplot(self.geomList, bins = 11, label='simulation results')
+        ax.set_xlabel("Number of Heads", fontsize=16)
+        ax.set_ylabel("Frequency", fontsize=16)
+
+        #  Теория
+        x = range(0, 10)
+        ax.plot(x, geom.pmf(x, 10, 0.5), 'ro', label='actual binomial distribution')
+        ax.vlines(x, 0, geom.pmf(x, 10, 0.5), colors='r', lw=5, alpha=0.5)
+        plt.legend()
+        plt.show()
 
 geometricDist1 = GeometricDist(10000, 0.5, "1")
 geometricDist2 = GeometricDist(10000, 0.5, "2")
@@ -87,4 +102,8 @@ geometricDist3 = GeometricDist(10000, 0.5, "3")
 
 geometricDist1.outputResult(geometricDist1.geomList, geometricDist2.geomList, geometricDist3.geomList)
 
+geometricDist1.graphBinomDist()
+geometricDist2.graphBinomDist()
+geometricDist3.graphBinomDist()
 
+print(geometricDist2.geomList)
