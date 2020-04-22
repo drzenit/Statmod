@@ -15,9 +15,6 @@ class BinomialDist():
         self.numbList = commonFunc.generateRandomList(self.n)
         self.N = N
         self.p = p
-        self.binomList = list()
-        for i in self.numbList:
-            self.binomList.append(commonFunc.IRNUNI(0, self.N - 1, i))
 
     def bernFunc(self):
         listP = list()
@@ -74,17 +71,17 @@ class BinomialDist():
 
         return binomList
 
-    def findMaxFrq(self):
+    def findMaxFrq(self, binomList: list):
         maxNumbList = list()
         maxFrqList = list()
         maxFrqList.append(1)
-        for i in range(self.n):
-            frqNumb = self.binomList[i]
+        for i in binomList:
+            frqNumb = i
             if (frqNumb in maxNumbList):
                 continue
             frq = 0
-            for k in range(self.n):
-                if (frqNumb == self.binomList[k]):
+            for k in binomList:
+                if (frqNumb == k):
                     frq += 1
             if (frq > maxFrqList[0]):
                 maxNumbList.clear()
@@ -97,25 +94,29 @@ class BinomialDist():
 
         return maxNumbList, maxFrqList
 
+    def graphBinomDist(self, method: str):
+        #  Практика
+        if (method == "BNL"):
+            binsPar = 11
+        elif (method == "BIN"):
+            binsPar = 10
+        fig, ax = plt.subplots(figsize=(14, 7))
+        sns.distplot(a.createBinomList(method), bins = binsPar, label='simulation results')
+        ax.set_xlabel("Number of Heads", fontsize=16)
+        ax.set_ylabel("Frequency", fontsize=16)
+
+        #  Теория
+        x = range(0, 10)
+        ax.plot(x, binom.pmf(x, 10, 0.5), 'ro', label='actual binomial distribution')
+        ax.vlines(x, 0, binom.pmf(x, 10, 0.5), colors='r', lw=5, alpha=0.5)
+        plt.legend()
+        plt.show()
+
+    def getMathematicalExpectation(self):
+        P = self.bernFunc()
+
+
 
 a = BinomialDist(10000, 10, 0.5)
 
-print(a.binomFunc())
-print(a.bernFunc())
-print(a.createBinomList("BNL"))
-print(len(a.createBinomList("BNL")))
-
-#  Практика
-fig, ax = plt.subplots(figsize=(14,7))
-sns.distplot(a.createBinomList("BNL"), bins=11, label='simulation results')
-ax.set_xlabel("Number of Heads",fontsize=16)
-ax.set_ylabel("Frequency",fontsize=16)
-
-
-#  Теория
-x = range(0, 10)
-ax.plot(x, binom.pmf(x, 10, 0.5), 'ro', label='actual binomial distribution')
-ax.vlines(x, 0, binom.pmf(x, 10, 0.5), colors='r', lw=5, alpha=0.5)
-plt.legend()
-plt.show()
 

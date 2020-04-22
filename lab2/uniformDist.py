@@ -18,19 +18,19 @@ class UniformDist:
 
         return intNumbList
 
-    def getMathematicalExpectation(self, numbList: list, n: int):
+    def getMathematicalExpectation(self):
         sumOfNumb = 0.0
-        for i in numbList:
+        for i in self.numbList:
             sumOfNumb += i
-        matExpec = sumOfNumb / (n - 1)
+        matExpec = sumOfNumb / (self.n - 1)
 
         return matExpec
 
-    def getDispersion(self, numbList: list, matExpec: float, n: int):
+    def getDispersion(self, matExpec: float):
         deviation = 0.0
-        for i in numbList:
+        for i in self.numbList:
             deviation += ((i - matExpec) ** 2)
-        dispersion = deviation / (n - 1)
+        dispersion = deviation / (self.n - 1)
 
         return dispersion
 
