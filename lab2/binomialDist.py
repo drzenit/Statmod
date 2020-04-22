@@ -1,6 +1,7 @@
 from math import factorial
 import sns as sns
 import matplotlib.pyplot as plt
+from prettytable import PrettyTable
 from scipy.stats import binom
 import seaborn as sns
 
@@ -94,6 +95,16 @@ class BinomialDist():
 
         return maxNumbList
 
+    def outputResult(self, listBNL: list, listBIN: list):
+        resultTable = PrettyTable()
+        resultTable.field_names = ["Оценка", "IRBNL", "IRNBIN", "Теоретическое значение"]
+        matExpecBNL = commonFunc.getMathematicalExpectation(listBNL, len(listBNL))
+        dispersionBNL = commonFunc.getDispersion(listBNL, len(listBNL), matExpecBNL)
+        matExpecBIN = commonFunc.getMathematicalExpectation(listBIN, len(listBIN))
+        dispersionBIN = commonFunc.getDispersion(listBIN, len(listBIN), matExpecBIN)
+        resultTable.add_row(["M = \n D = ", "%f\n%f" % (matExpecBNL, dispersionBNL), "%f\n%f" % (matExpecBIN, dispersionBIN), "%f\n%f" % (5, 2.5)])
+        print(resultTable)
+
     def graphBinomDist(self):
         #  Практика
         if (self.method == "BNL"):
@@ -112,7 +123,7 @@ class BinomialDist():
         plt.legend()
         plt.show()
 
-a = BinomialDist(10000, 10, 0.5,"BNL")
+binomialDistBNL = BinomialDist(10000, 10, 0.5, "BNL")
+binomialDistBIN = BinomialDist(10000, 10, 0.5, "BIN")
 
-print(commonFunc.getDispersion(a.binomList, a.n, commonFunc.getMathematicalExpectation(a.binomList, a.n)))
-
+binomialDistBNL.outputResult(binomialDistBNL.binomList, binomialDistBIN.binomList)
