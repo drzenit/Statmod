@@ -1,5 +1,7 @@
 from math import log
 
+from prettytable import PrettyTable
+
 from lab2 import commonFunc
 
 
@@ -66,10 +68,23 @@ class GeometricDist():
 
         return geomList
 
+    def outputResult(self, list1: list, list2: list, list3: list):
+        resultTable = PrettyTable()
+        resultTable.field_names = ["Момент", "IRNGEO_1", "IRNGEO_2", "IRNGEO_3", "Теоретическое значение"]
+        matExpec1 = commonFunc.getMathematicalExpectation(list1, len(list1))
+        dispersion1 = commonFunc.getDispersion(list1, len(list1), matExpec1)
+        matExpec2 = commonFunc.getMathematicalExpectation(list2, len(list2))  # len(list2) - длина меньше n, мат ожидание неверное?
+        dispersion2 = commonFunc.getDispersion(list2, len(list2), matExpec2)  # Дисперсия супер верная при len(list2) < n
+        matExpec3 = commonFunc.getMathematicalExpectation(list3, len(list3))
+        dispersion3 = commonFunc.getDispersion(list3, len(list3), matExpec3)
+        resultTable.add_row(["M = \n D = ", "%f\n%f" % (matExpec1, dispersion1), "%f\n%f" % (matExpec2, dispersion2), "%f\n%f" % (matExpec3, dispersion3), "%f\n%f" % (2, 2.2)])
+        print(resultTable)
 
 
-a = GeometricDist(10000, 0.5, "3")
+geometricDist1 = GeometricDist(10000, 0.5, "1")
+geometricDist2 = GeometricDist(10000, 0.5, "2")
+geometricDist3 = GeometricDist(10000, 0.5, "3")
 
-print(commonFunc.getMathematicalExpectation(a.geomList, 10000))
-print(commonFunc.getDispersion(a.geomList, 10000, commonFunc.getMathematicalExpectation(a.geomList, 10000)))
+geometricDist1.outputResult(geometricDist1.geomList, geometricDist2.geomList, geometricDist3.geomList)
+
 
