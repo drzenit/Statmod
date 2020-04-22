@@ -1,13 +1,11 @@
 from math import factorial
 import sns as sns
+import matplotlib.pyplot as plt
+from scipy.stats import binom
+import seaborn as sns
 
 from lab2 import commonFunc
 
-import matplotlib.pyplot as plt
-from matplotlib import pyplot
-from scipy.stats import binom, norm
-import seaborn as sns
-from statsmodels.graphics.tsaplots import plot_pacf
 
 class BinomialDist():
     def __init__(self, n: int, N: int, p: float, method: str):
@@ -114,15 +112,7 @@ class BinomialDist():
         plt.legend()
         plt.show()
 
-    def getMathematicalExpectation(self):
-        maxFrqNumb =  self.findMaxFrq()
-        if (len(maxFrqNumb) > 1):
-            return (sum(maxFrqNumb) / len(maxFrqNumb))
-        else:
-            return sum(maxFrqNumb)
-
-
 a = BinomialDist(10000, 10, 0.5,"BNL")
 
-print(a.getMathematicalExpectation())
+print(commonFunc.getDispersion(a.binomList, a.n, commonFunc.getMathematicalExpectation(a.binomList, a.n)))
 

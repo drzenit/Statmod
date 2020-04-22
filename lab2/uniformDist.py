@@ -9,37 +9,26 @@ class UniformDist:
         self.numbList = commonFunc.generateRandomList(self.n)
         self.lowLimit = lowLimit
         self.upLimit = upLimit
+        self.numbIntList = self.createIntList()
+
+    def IRNUNI(self, ILOW: int, IUP: int, floatNum: float):
+        r = (IUP - ILOW + 1) * floatNum + ILOW
+
+        return round(r)
 
     def createIntList(self):
         intNumbList = list()
         for i in self.numbList:
-            IR = commonFunc.IRNUNI(self.lowLimit, self.upLimit, i)
+            IR = self.IRNUNI(self.lowLimit, self.upLimit, i)
             intNumbList.append(IR)
 
         return intNumbList
 
-    def getMathematicalExpectation(self):
-        sumOfNumb = 0.0
-        for i in self.numbList:
-            sumOfNumb += i
-        matExpec = sumOfNumb / (self.n - 1)
-
-        return matExpec
-
-    def getDispersion(self, matExpec: float):
-        deviation = 0.0
-        for i in self.numbList:
-            deviation += ((i - matExpec) ** 2)
-        dispersion = deviation / (self.n - 1)
-
-        return dispersion
-
     def outputResult(self):
         resultTable = PrettyTable()
         resultTable.field_names = ["Оценка", "IRNUNI", "Погрешность", "Теоретическое значение"]
-        numbList = self.createIntList()
-        matExpec = self.getMathematicalExpectation(numbList, self.n)
-        dispersion = self.getDispersion(numbList, matExpec, self.n)
+        matExpec = commonFunc.getMathematicalExpectation(self.numbIntList, self.n)
+        dispersion = commonFunc.getDispersion(self.numbIntList, self.n, matExpec)
 
         resultTable.add_row(["M = \n D = ", "%f\n%f" % (matExpec, dispersion), "%f\n%f" % ((50.5 - matExpec), (833.25 - dispersion)), "%f\n%f" % (50.5, 833.25)])
         print(resultTable)
