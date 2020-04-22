@@ -70,5 +70,6 @@ class GeometricDist():
 
 a = GeometricDist(10000, 0.5, "3")
 
-print(a.createGeomList())
+print(commonFunc.getMathematicalExpectation(a.geomList, 10000))
+print(commonFunc.getDispersion(a.geomList, 10000, commonFunc.getMathematicalExpectation(a.geomList, 10000)))
 
