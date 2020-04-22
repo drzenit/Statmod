@@ -10,11 +10,13 @@ import seaborn as sns
 from statsmodels.graphics.tsaplots import plot_pacf
 
 class BinomialDist():
-    def __init__(self, n: int, N: int, p: float):
+    def __init__(self, n: int, N: int, p: float, method: str):
         self.n = n
         self.numbList = commonFunc.generateRandomList(self.n)
         self.N = N
         self.p = p
+        self.method = method
+        self.binomList = self.createBinomList()
 
     def bernFunc(self):
         listP = list()
@@ -56,14 +58,14 @@ class BinomialDist():
             elif (M < 0):
                 return x
 
-    def createBinomList(self, method: str):
+    def createBinomList(self):
         binomList = list()
-        if (method == "BNL"):
+        if (self.method == "BNL"):
             for i in self.numbList:
                 IR = self.IRNBNL(i)
                 if (IR != None):
                     binomList.append(IR)
-        elif (method == "BIN"):
+        elif (self.method == "BIN"):
             for i in self.numbList:
                 IR = self.IRNBIN(i)
                 if (IR != None):
@@ -71,16 +73,16 @@ class BinomialDist():
 
         return binomList
 
-    def findMaxFrq(self, binomList: list):
+    def findMaxFrq(self):
         maxNumbList = list()
         maxFrqList = list()
         maxFrqList.append(1)
-        for i in binomList:
+        for i in self.binomList:
             frqNumb = i
             if (frqNumb in maxNumbList):
                 continue
             frq = 0
-            for k in binomList:
+            for k in self.binomList:
                 if (frqNumb == k):
                     frq += 1
             if (frq > maxFrqList[0]):
@@ -92,16 +94,16 @@ class BinomialDist():
                 maxNumbList.append(frqNumb)
                 maxFrqList.append(frq)
 
-        return maxNumbList, maxFrqList
+        return maxNumbList
 
-    def graphBinomDist(self, method: str):
+    def graphBinomDist(self):
         #  Практика
-        if (method == "BNL"):
+        if (self.method == "BNL"):
             binsPar = 11
-        elif (method == "BIN"):
+        elif (self.method == "BIN"):
             binsPar = 10
         fig, ax = plt.subplots(figsize=(14, 7))
-        sns.distplot(a.createBinomList(method), bins = binsPar, label='simulation results')
+        sns.distplot(a.createBinomList(), bins = binsPar, label='simulation results')
         ax.set_xlabel("Number of Heads", fontsize=16)
         ax.set_ylabel("Frequency", fontsize=16)
 
@@ -113,10 +115,14 @@ class BinomialDist():
         plt.show()
 
     def getMathematicalExpectation(self):
-        P = self.bernFunc()
+        maxFrqNumb =  self.findMaxFrq()
+        if (len(maxFrqNumb) > 1):
+            return (sum(maxFrqNumb) / len(maxFrqNumb))
+        else:
+            return sum(maxFrqNumb)
 
 
+a = BinomialDist(10000, 10, 0.5,"BNL")
 
-a = BinomialDist(10000, 10, 0.5)
-
+print(a.getMathematicalExpectation())
 
