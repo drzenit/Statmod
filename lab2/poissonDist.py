@@ -1,4 +1,4 @@
-from math import exp
+from math import exp, factorial
 
 import sns as sns
 import matplotlib.pyplot as plt
@@ -23,11 +23,34 @@ class PoissonDist():
         return round(r)
 
     def getNextP(self, prevP: float, r: int):
-        p = (prevP * self.mu) / r
+        p = prevP * self.mu / r
 
         return p
 
-    def IRNPOI(self, randNum: float):
+    def getPrevP(self, p: float, r: int):
+        p = p * r / self.mu
+
+        return p
+
+    def getQ(self):
+        p = exp(-self.mu)
+        Q = p
+        Pl = p
+        x = 1
+        l = x
+        pNext = self.getNextP(p, x)
+        while(p < pNext):
+            Pl = pNext
+            l = x
+            Q = Q + pNext
+            x += 1
+            p = pNext
+            x += 1
+            pNext = self.getNextP(p, x)
+
+        return Q, l, Pl
+
+    def IRNPOI(self, randNum: float):  # слишком доооолго
         p0 = exp(-self.mu)
         P = p0
         M = randNum
@@ -52,10 +75,49 @@ class PoissonDist():
 
         return poiList
 
+    def specAlgorithm(self, randNum: float):
+        Q = self.getQ()
+        M = randNum - Q[0]
+        m = Q[1]
+        P = Q[2]
+        if (M >= 0):
+            while (True):
+                P = self.getNextP(P, m)
+                M = M - P
+                if (M <= 0):
+                    return m
+                else:
+                    m += 1
+        else:
+            while (True):
+                M = M + P
+                if (M >= 0):
+                    return  m
+                else:
+                    P = self.getPrevP(P, m)
+                    m -= 1
 
-a = PoissonDist(10000, 10, "1")
 
-print(a.IRNPSN(2.1))
+    def createPoissList(self):
+        poissList = list()
+        if (self.method == "POI"):
+            for i in self.numbList:
+                IR = self.specAlgorithm(i)
+                if (IR != None):
+                    poissList.append(IR)
+        elif (self.method == "PSN"):
+            for i in self.numbList:
+                IR = self.IRNPSN(i)
+                if (IR != None):
+                    poissList.append(IR)
 
-print(commonFunc.getMathematicalExpectation(a.IRNPSN(2.1), 10000))
+        return poissList
+
+
+a = PoissonDist(10000, 10, "POI")
+
+print(a.createPoissList())
+
+
+#print(commonFunc.getMathematicalExpectation(a.createPoissList(), 100))
 

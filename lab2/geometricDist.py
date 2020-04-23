@@ -106,4 +106,4 @@ geometricDist1.graphBinomDist()
 geometricDist2.graphBinomDist()
 geometricDist3.graphBinomDist()
 
-print(geometricDist2.geomList)
+print(geometricDist1.geomList)
