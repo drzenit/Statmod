@@ -12,10 +12,14 @@ class BinomialDist():
     def __init__(self, n: int, N: int, p: float, method: str):
         self.n = n
         self.numbList = commonFunc.generateRandomList(self.n)
+        self.normNumbList = list()
         self.N = N
         self.p = p
         self.method = method
         self.binomList = self.createBinomList()
+
+    def gaussian(self, x, mu, sigma):
+        return math.exp(-0.5 * ((x - mu) / sigma) ** 2) / sigma / math.sqrt(2 * math.pi)
 
     def bernFunc(self):
         listP = list()
@@ -48,7 +52,7 @@ class BinomialDist():
                 return x
 
     def IRNBIN(self, randNum: float):
-        P = self.binomFunc()
+        P = self.bernFunc()
         M = randNum
         for x in range(11):
             M = M - P[x]
@@ -123,7 +127,15 @@ class BinomialDist():
         plt.legend()
         plt.show()
 
+    def graphHist(self):
+        print(self.binomList)
+        plt.hist(self.binomList)
+        plt.show()
+
 binomialDistBNL = BinomialDist(10000, 10, 0.5, "BNL")
 binomialDistBIN = BinomialDist(10000, 10, 0.5, "BIN")
 
 binomialDistBNL.outputResult(binomialDistBNL.binomList, binomialDistBIN.binomList)
+
+binomialDistBIN.graphHist()
+binomialDistBNL.graphHist()
