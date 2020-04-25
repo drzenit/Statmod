@@ -39,11 +39,10 @@ class PoissonDist():
         x = 1
         l = x
         pNext = self.getNextP(p, x)
-        while(p < pNext):
+        while (p <= pNext):
             Pl = pNext
             l = x
             Q = Q + pNext
-            x += 1
             p = pNext
             x += 1
             pNext = self.getNextP(p, x)
@@ -102,6 +101,11 @@ class PoissonDist():
         poissList = list()
         if (self.method == "POI"):
             for i in self.numbList:
+                IR = self.IRNPOI(i)
+                if (IR != None):
+                    poissList.append(IR)
+        elif (self.method == "SPEC"):
+            for i in self.numbList:
                 IR = self.specAlgorithm(i)
                 if (IR != None):
                     poissList.append(IR)
@@ -114,9 +118,11 @@ class PoissonDist():
         return poissList
 
 
-a = PoissonDist(10000, 10, "POI")
+a = PoissonDist(10000, 10, "PSN")
 
-print(a.createPoissList())
+matExpec = commonFunc.getMathematicalExpectation(a.IRNPSN(1), len(a.IRNPSN(1)))
+print(matExpec)
+print(commonFunc.getDispersion(a.IRNPSN(1), len(a.IRNPSN(1)), matExpec))
 
 
 #print(commonFunc.getMathematicalExpectation(a.createPoissList(), 100))
