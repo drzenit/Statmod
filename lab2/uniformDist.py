@@ -1,4 +1,7 @@
+import sns as sns
+import matplotlib.pyplot as plt
 from prettytable import PrettyTable
+import seaborn as sns
 
 from lab2 import commonFunc
 
@@ -33,7 +36,16 @@ class UniformDist:
         resultTable.add_row(["M = \n D = ", "%f\n%f" % (matExpec, dispersion), "%f\n%f" % ((50.5 - matExpec), (833.25 - dispersion)), "%f\n%f" % (50.5, 833.25)])
         print(resultTable)
 
+    def graphUniformDist(self):
+        #  Практика
+        fig, ax = plt.subplots(figsize=(14, 7))
+        sns.distplot(self.numbIntList, bins = 10, label='simulation results')
+        ax.set_xlabel("Number of Heads", fontsize=16)
+        ax.set_ylabel("Frequency", fontsize=16)
+        plt.show()
+
 
 uniformDist = UniformDist(10000, 1, 100)
 
 uniformDist.outputResult()
+uniformDist.graphUniformDist()

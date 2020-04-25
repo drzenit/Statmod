@@ -90,9 +90,9 @@ class GeometricDist():
         ax.set_ylabel("Frequency", fontsize=16)
 
         #  Теория
-        x = range(0, 10)
-        ax.plot(x, geom.pmf(x, 10, 0.5), 'ro', label='actual binomial distribution')
-        ax.vlines(x, 0, geom.pmf(x, 10, 0.5), colors='r', lw=5, alpha=0.5)
+        x = range(0, 25)
+        ax.plot(x, geom.pmf(x, 0.5), 'ro', label='actual binomial distribution')
+        ax.vlines(x, 0, geom.pmf(x, 0.5), colors='r', lw=5, alpha=0.5)
         plt.legend()
         plt.show()
 

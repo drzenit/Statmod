@@ -1,6 +1,9 @@
 from math import log
-
+import sns as sns
+import matplotlib.pyplot as plt
+import seaborn as sns
 from prettytable import PrettyTable
+from scipy.stats import logser
 
 from lab2 import commonFunc
 
@@ -49,6 +52,17 @@ class LogarithmicDist():
         resultTable.add_row(["M = \n D = ", "%f\n%f" % (matExpec, dispersion), "%f\n%f" % ((1.44270 - matExpec), (0.80402 - dispersion)), "%f\n%f" % (1.44270, 0.80402)])
         print(resultTable)
 
+    def graphLogDist(self):
+        fig, ax = plt.subplots(figsize=(14, 7))
+        sns.distplot(self.logList, label='simulation results')
+        ax.set_xlabel("Number of Heads", fontsize=16)
+        ax.set_ylabel("Frequency", fontsize=16)
+
+        ax.plot(self.logList, logser.pmf(self.logList, 0.5), 'ro', label='actual binomial distribution')
+        ax.vlines(self.logList, 0, logser.pmf(self.logList, 0.5), colors='r', lw=5, alpha=0.5)
+        plt.legend()
+        plt.show()
+
 
 n = 100000
 a = LogarithmicDist(n, 0.5)
@@ -61,3 +75,4 @@ print(matExpec)
 print(commonFunc.getDispersion(l, n, matExpec))
 
 a.outputResult()
+a.graphLogDist()

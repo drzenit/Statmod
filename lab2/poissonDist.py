@@ -136,7 +136,7 @@ class PoissonDist():
         ax.set_ylabel("Frequency", fontsize=16)
 
         #  Теория
-        x = range(0, 10)
+        x = range(0, 25)
         ax.plot(x, poisson.pmf(x, 10), 'ro', label='actual binomial distribution')
         ax.vlines(x, 0, poisson.pmf(x, 10), colors='r', lw=5, alpha=0.5)
         plt.legend()
