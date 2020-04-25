@@ -128,9 +128,24 @@ class PoissonDist():
         resultTable.add_row(["M = \n D = ", "%f\n%f" % (matExpecPOI, dispersionPOI), "%f\n%f" % (matExpecPSN, dispersionPSN), "%f\n%f" % (10.0, 10.0)])
         print(resultTable)
 
+    def graphPoissDist(self):
+        #  Практика
+        fig, ax = plt.subplots(figsize=(14, 7))
+        sns.distplot(self.poissList, label='simulation results')
+        ax.set_xlabel("Number of Heads", fontsize=16)
+        ax.set_ylabel("Frequency", fontsize=16)
+
+        #  Теория
+        x = range(0, 10)
+        ax.plot(x, poisson.pmf(x, 10), 'ro', label='actual binomial distribution')
+        ax.vlines(x, 0, poisson.pmf(x, 10), colors='r', lw=5, alpha=0.5)
+        plt.legend()
+        plt.show()
 
 poissonDistPSN = PoissonDist(10000, 10, "PSN")
 poissonDistPOI = PoissonDist(10000, 10, "SPEC")
 
 poissonDistPOI.outputResult(poissonDistPOI.poissList, poissonDistPSN.poissList)
 
+poissonDistPOI.graphPoissDist()
+poissonDistPSN.graphPoissDist()
