@@ -15,7 +15,7 @@ class PoissonDist():
         self.numbList = commonFunc.generateRandomList(self.n)
         self.mu = mu
         self.method = method
-        #self.poissList = self.createPoissList()
+        self.poissList = self.createPoissList()
 
     def IRNUNI(self, ILOW: int, IUP: int, floatNum: float):
         r = (IUP - ILOW + 1) * floatNum + ILOW
@@ -63,7 +63,7 @@ class PoissonDist():
             elif (M < 0):
                 return x
 
-    def IRNPSN(self, randNum: float):
+    def IRNPSN(self):
         poiList = list()
         poiNum = 1
         for i in self.numbList:
@@ -110,20 +110,27 @@ class PoissonDist():
                 if (IR != None):
                     poissList.append(IR)
         elif (self.method == "PSN"):
-            for i in self.numbList:
-                IR = self.IRNPSN(i)
-                if (IR != None):
-                    poissList.append(IR)
+            #for i in self.numbList:
+            IR = self.IRNPSN()
+            poissList = IR
+                #if (IR != None):
+                    #poissList.append(IR)
 
         return poissList
 
+    def outputResult(self, listPOI: list, listPSN: list):
+        resultTable = PrettyTable()
+        resultTable.field_names = ["Момент", "IRNPOI", "IRNPSN", "Теоретическое значение"]
+        matExpecPOI = commonFunc.getMathematicalExpectation(listPOI, len(listPOI))
+        dispersionPOI = commonFunc.getDispersion(listPOI, len(listPOI), matExpecPOI)
+        matExpecPSN = commonFunc.getMathematicalExpectation(listPSN, len(listPSN))
+        dispersionPSN = commonFunc.getDispersion(listPSN, len(listPSN), matExpecPSN)
+        resultTable.add_row(["M = \n D = ", "%f\n%f" % (matExpecPOI, dispersionPOI), "%f\n%f" % (matExpecPSN, dispersionPSN), "%f\n%f" % (10.0, 10.0)])
+        print(resultTable)
 
-a = PoissonDist(10000, 10, "PSN")
 
-matExpec = commonFunc.getMathematicalExpectation(a.IRNPSN(1), len(a.IRNPSN(1)))
-print(matExpec)
-print(commonFunc.getDispersion(a.IRNPSN(1), len(a.IRNPSN(1)), matExpec))
+poissonDistPSN = PoissonDist(10000, 10, "PSN")
+poissonDistPOI = PoissonDist(10000, 10, "SPEC")
 
-
-#print(commonFunc.getMathematicalExpectation(a.createPoissList(), 100))
+poissonDistPOI.outputResult(poissonDistPOI.poissList, poissonDistPSN.poissList)
 
