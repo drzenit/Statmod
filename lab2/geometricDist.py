@@ -1,6 +1,5 @@
 from math import log
 from prettytable import PrettyTable
-from scipy.stats import geom
 import seaborn as sns
 import matplotlib.pyplot as plt
 
