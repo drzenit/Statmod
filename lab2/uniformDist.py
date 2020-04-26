@@ -1,7 +1,5 @@
 import matplotlib.pyplot as plt
 from prettytable import PrettyTable
-import seaborn as sns
-from scipy.stats import uniform
 
 from lab2 import commonFunc
 
@@ -37,7 +35,24 @@ class UniformDist:
         print(resultTable)
 
     def graphHist(self):
-        plt.hist(self.uniformList)
+        plt.title("Practic Histogram")
+        plt.hist(self.uniformList, bins=200)
+        plt.show()
+
+    def graphProbabilityDensity(self):
+        p = 1 / (self.upLimit - self.lowLimit + 1)
+        x = range(self.lowLimit, self.upLimit)
+        plt.title("Probability Density")
+        plt.vlines(x, ymin=p, ymax=0, colors="red")
+        plt.show()
+
+    def graphIntegralProbabilityDensity(self):
+        x = range(self.lowLimit, self.upLimit)
+        p = list()
+        for i in x:
+            p.append(i - self.lowLimit + 1 / (self.upLimit - self.lowLimit + 1))
+        plt.title("Integral Probability Density")
+        plt.vlines(x, ymin=0, ymax=p, colors="red")
         plt.show()
 
 
@@ -45,3 +60,5 @@ uniformDist = UniformDist(10000, 1, 100)
 
 uniformDist.outputResult()
 uniformDist.graphHist()
+uniformDist.graphProbabilityDensity()
+uniformDist.graphIntegralProbabilityDensity()
