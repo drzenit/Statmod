@@ -35,8 +35,11 @@ class GeometricDist():
                 return x
 
     def IRNGEO_2(self, randNum: float, x: int):
-        if (randNum <= self.p):
-            return x
+        while(True):
+            if (randNum <= self.p):
+                return x
+            else:
+                return None
 
     def IRNGEO_3(self, randNum: float):
         k = (int(log(randNum) / log(1 - self.p))) + 1
@@ -51,12 +54,14 @@ class GeometricDist():
                 if (IR != None):
                     geomList.append(IR)
         if (self.method == "2"):
-            k = 0
+            x = 1
             for i in self.numbList:
-                k += 1
-                IR = self.IRNGEO_2(i, k)
+                IR = self.IRNGEO_2(i, x)
                 if (IR != None):
+                    x = 1
                     geomList.append(IR)
+                else:
+                    x += 1
         if (self.method == "3"):
             for i in self.numbList:
                 IR = self.IRNGEO_3(i)
@@ -77,14 +82,33 @@ class GeometricDist():
         resultTable.add_row(["M = \n D = ", "%f\n%f" % (matExpec1, dispersion1), "%f\n%f" % (matExpec2, dispersion2), "%f\n%f" % (matExpec3, dispersion3), "%f\n%f" % (2, 2.2)])
         print(resultTable)
 
-    def graphBinomDist(self):
-        #  Практика
-        fig, ax = plt.subplots(figsize=(14, 7))
-        sns.distplot(self.geomList, bins = 11, label='simulation results')
-        ax.set_xlabel("Number of Heads", fontsize=16)
-        ax.set_ylabel("Frequency", fontsize=16)
+    def graphSimulationResult(self):
+        sns.distplot(self.geomList, hist=False, label='Practic results')
         plt.show()
-        #  Теория
+        plt.title("Practic Histogram")
+        plt.hist(self.geomList, bins=50)
+        plt.show()
+
+    def graphProbabilityDensity(self):
+        r = range(1, 21)
+        p = list()
+        for i in r:
+            p.append(self.p * (1 - self.p)**(i - 1))
+        plt.title("Probability Density")
+        plt.vlines(r, ymin=p, ymax=0, colors="red")
+        plt.plot(r, p, 'g')
+        plt.show()
+
+    def graphIntegralProbabilityDensity(self):
+        x = range(1, 21)
+        p = list()
+        for i in x:
+            p.append(1 - (1 - self.p)**(i - 1))
+        plt.title("Integral Probability Density")
+        plt.vlines(x, ymin=0, ymax=p, colors="red")
+        plt.plot(x, p, 'g')
+        plt.show()
+
 
 geometricDist1 = GeometricDist(10000, 0.5, "1")
 geometricDist2 = GeometricDist(10000, 0.5, "2")
@@ -92,8 +116,11 @@ geometricDist3 = GeometricDist(10000, 0.5, "3")
 
 geometricDist1.outputResult(geometricDist1.geomList, geometricDist2.geomList, geometricDist3.geomList)
 
-geometricDist1.graphBinomDist()
-geometricDist2.graphBinomDist()
-geometricDist3.graphBinomDist()
+geometricDist1.graphSimulationResult()
+geometricDist2.graphSimulationResult()
+geometricDist3.graphSimulationResult()
 
 print(geometricDist2.geomList)
+
+geometricDist1.graphProbabilityDensity()
+geometricDist1.graphIntegralProbabilityDensity()

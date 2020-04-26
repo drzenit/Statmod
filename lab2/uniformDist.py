@@ -45,8 +45,12 @@ class UniformDist:
     def graphProbabilityDensity(self):
         p = 1 / (self.upLimit - self.lowLimit + 1)
         x = range(self.lowLimit, self.upLimit)
+        pLine = list()
+        for i in x:
+            pLine.append(p)
         plt.title("Probability Density")
         plt.vlines(x, ymin=p, ymax=0, colors="red")
+        plt.plot(x, pLine, 'g')
         plt.show()
 
     def graphIntegralProbabilityDensity(self):
@@ -56,6 +60,7 @@ class UniformDist:
             p.append(i - self.lowLimit + 1 / (self.upLimit - self.lowLimit + 1))
         plt.title("Integral Probability Density")
         plt.vlines(x, ymin=0, ymax=p, colors="red")
+        plt.plot(x, p, 'g')
         plt.show()
 
 
