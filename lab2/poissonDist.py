@@ -142,7 +142,7 @@ class PoissonDist():
         plt.show()
 
     def graphIntegralProbabilityDensity(self):
-        x = range(1, 40)
+        x = range(1, 25)
         p = list()
         sumPoi = 0
         for i in x:

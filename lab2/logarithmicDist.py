@@ -2,6 +2,7 @@ from math import log
 import matplotlib.pyplot as plt
 import seaborn as sns
 from prettytable import PrettyTable
+from scipy.special import beta
 
 from lab2 import commonFunc
 
@@ -67,6 +68,16 @@ class LogarithmicDist():
         plt.plot(r, p, 'g')
         plt.show()
 
+    def graphIntegralProbabilityDensity(self):
+        x = range(1, 11)
+        p = list()
+        for i in x:
+            p.append(1 + ((beta(i + 1, 1)) / log(1 - self.p)))
+        plt.title("Integral Probability Density")
+        plt.vlines(x, ymin=0, ymax=p, colors="red")
+        plt.plot(x, p, 'g')
+        plt.show()
+
 
 n = 10000
 a = LogarithmicDist(n, 0.5)
@@ -81,3 +92,4 @@ print(commonFunc.getDispersion(l, n, matExpec))
 a.outputResult()
 a.graphSimulationResult()
 a.graphProbabilityDensity()
+a.graphIntegralProbabilityDensity()
