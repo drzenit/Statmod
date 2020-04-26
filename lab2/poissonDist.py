@@ -2,7 +2,6 @@ from math import exp, factorial
 from random import random
 import matplotlib.pyplot as plt
 from prettytable import PrettyTable
-from scipy.special import gamma
 import seaborn as sns
 
 from lab2 import commonFunc
