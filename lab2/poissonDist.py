@@ -1,9 +1,8 @@
 from math import exp, factorial
-
-import sns as sns
+from random import random
 import matplotlib.pyplot as plt
 from prettytable import PrettyTable
-from scipy.stats import poisson
+from scipy.special import gamma
 import seaborn as sns
 
 from lab2 import commonFunc
@@ -64,15 +63,14 @@ class PoissonDist():
                 return x
 
     def IRNPSN(self):
-        poiList = list()
-        poiNum = 1
-        for i in self.numbList:
-            if (poiNum >= exp(-self.mu)):
-                poiNum = poiNum * i
-            poiList.append(self.IRNUNI(poiNum, 1, 6))
-            poiNum = 1
+        r = 0
+        mul = 1
+        while (mul >= exp(-self.mu)):
+            u = random()
+            r += 1
+            mul = mul * u
+        return r
 
-        return poiList
 
     def specAlgorithm(self, randNum: float):
         Q = self.getQ()
@@ -91,7 +89,7 @@ class PoissonDist():
             while (True):
                 M = M + P
                 if (M >= 0):
-                    return  m
+                    return m
                 else:
                     P = self.getPrevP(P, m)
                     m -= 1
@@ -110,11 +108,10 @@ class PoissonDist():
                 if (IR != None):
                     poissList.append(IR)
         elif (self.method == "PSN"):
-            #for i in self.numbList:
-            IR = self.IRNPSN()
-            poissList = IR
-                #if (IR != None):
-                    #poissList.append(IR)
+            for i in self.numbList:
+                IR = self.IRNPSN()
+                if (IR != None):
+                    poissList.append(IR)
 
         return poissList
 
@@ -128,24 +125,47 @@ class PoissonDist():
         resultTable.add_row(["M = \n D = ", "%f\n%f" % (matExpecPOI, dispersionPOI), "%f\n%f" % (matExpecPSN, dispersionPSN), "%f\n%f" % (10.0, 10.0)])
         print(resultTable)
 
-    def graphPoissDist(self):
-        #  Практика
-        fig, ax = plt.subplots(figsize=(14, 7))
-        sns.distplot(self.poissList, label='simulation results')
-        ax.set_xlabel("Number of Heads", fontsize=16)
-        ax.set_ylabel("Frequency", fontsize=16)
+    def graphSimulationResult(self):
+        sns.distplot(self.poissList, hist=False, label='Practic results')
+        plt.show()
+        plt.title("Practic Histogram")
+        plt.hist(self.poissList, bins=50)
+        plt.show()
 
-        #  Теория
-        x = range(0, 25)
-        ax.plot(x, poisson.pmf(x, 10), 'ro', label='actual binomial distribution')
-        ax.vlines(x, 0, poisson.pmf(x, 10), colors='r', lw=5, alpha=0.5)
-        plt.legend()
+    def graphProbabilityDensity(self):
+        r = range(1, 25)
+        p = list()
+        for i in r:
+            p.append((self.mu**i * exp(-self.mu)) / factorial(i))
+        plt.title("Probability Density")
+        plt.vlines(r, ymin=p, ymax=0, colors="red")
+        plt.plot(r, p, 'g')
+        plt.show()
+
+    def graphIntegralProbabilityDensity(self):
+        x = range(1, 40)
+        p = list()
+        sumPoi = 0
+        for i in x:
+            for k in range(i):
+                sumPoi = sumPoi + ((self.mu**k * exp(-self.mu)) / factorial(k))
+            p.append(sumPoi)
+            sumPoi = 0
+        plt.title("Integral Probability Density")
+        plt.vlines(x, ymin=0, ymax=p, colors="red")
+        plt.plot(x, p, 'g')
         plt.show()
 
 poissonDistPSN = PoissonDist(10000, 10, "PSN")
 poissonDistPOI = PoissonDist(10000, 10, "SPEC")
 
+print(poissonDistPSN.poissList)
+
+
 poissonDistPOI.outputResult(poissonDistPOI.poissList, poissonDistPSN.poissList)
 
-poissonDistPOI.graphPoissDist()
-poissonDistPSN.graphPoissDist()
+poissonDistPOI.graphSimulationResult()
+poissonDistPSN.graphSimulationResult()
+poissonDistPSN.graphProbabilityDensity()
+poissonDistPSN.graphIntegralProbabilityDensity()
+
