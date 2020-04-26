@@ -1,5 +1,6 @@
 import matplotlib.pyplot as plt
 from prettytable import PrettyTable
+import seaborn as sns
 
 from lab2 import commonFunc
 
@@ -34,7 +35,9 @@ class UniformDist:
         resultTable.add_row(["M = \n D = ", "%f\n%f" % (matExpec, dispersion), "%f\n%f" % ((50.5 - matExpec), (833.25 - dispersion)), "%f\n%f" % (50.5, 833.25)])
         print(resultTable)
 
-    def graphHist(self):
+    def graphSimulationResult(self):
+        sns.distplot(self.uniformList, hist=False, label='Practic results')
+        plt.show()
         plt.title("Practic Histogram")
         plt.hist(self.uniformList, bins=200)
         plt.show()
@@ -59,6 +62,6 @@ class UniformDist:
 uniformDist = UniformDist(10000, 1, 100)
 
 uniformDist.outputResult()
-uniformDist.graphHist()
+uniformDist.graphSimulationResult()
 uniformDist.graphProbabilityDensity()
 uniformDist.graphIntegralProbabilityDensity()

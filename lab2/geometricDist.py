@@ -15,11 +15,6 @@ class GeometricDist():
         self.numbList = commonFunc.generateRandomList(self.n)
         self.geomList = self.createGeomList()
 
-    def IRNUNI(self, ILOW: int, IUP: int, floatNum: float):
-        r = (IUP - ILOW + 1) * floatNum + ILOW
-
-        return round(r)
-
     def getNextP(self, prevP: float):
         p = prevP * (1 - self.p)
 
@@ -39,11 +34,9 @@ class GeometricDist():
             elif (M < 0):
                 return x
 
-    def IRNGEO_2(self, randNum: float):
+    def IRNGEO_2(self, randNum: float, x: int):
         if (randNum <= self.p):
-            intNum = self.IRNUNI(1, 10, randNum)  # Какие границы?
-
-            return intNum
+            return x
 
     def IRNGEO_3(self, randNum: float):
         k = (int(log(randNum) / log(1 - self.p))) + 1
@@ -58,8 +51,10 @@ class GeometricDist():
                 if (IR != None):
                     geomList.append(IR)
         if (self.method == "2"):
+            k = 0
             for i in self.numbList:
-                IR = self.IRNGEO_2(i)
+                k += 1
+                IR = self.IRNGEO_2(i, k)
                 if (IR != None):
                     geomList.append(IR)
         if (self.method == "3"):
@@ -88,13 +83,8 @@ class GeometricDist():
         sns.distplot(self.geomList, bins = 11, label='simulation results')
         ax.set_xlabel("Number of Heads", fontsize=16)
         ax.set_ylabel("Frequency", fontsize=16)
-
-        #  Теория
-        x = range(0, 25)
-        ax.plot(x, geom.pmf(x, 0.5), 'ro', label='actual binomial distribution')
-        ax.vlines(x, 0, geom.pmf(x, 0.5), colors='r', lw=5, alpha=0.5)
-        plt.legend()
         plt.show()
+        #  Теория
 
 geometricDist1 = GeometricDist(10000, 0.5, "1")
 geometricDist2 = GeometricDist(10000, 0.5, "2")
@@ -106,4 +96,4 @@ geometricDist1.graphBinomDist()
 geometricDist2.graphBinomDist()
 geometricDist3.graphBinomDist()
 
-print(geometricDist1.geomList)
+print(geometricDist2.geomList)

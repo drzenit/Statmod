@@ -1,5 +1,5 @@
+import math
 from math import factorial
-import sns as sns
 import matplotlib.pyplot as plt
 from prettytable import PrettyTable
 from scipy.stats import binom
