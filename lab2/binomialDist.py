@@ -127,15 +127,43 @@ class BinomialDist():
         plt.legend()
         plt.show()
 
-    def graphHist(self):
-        print(self.binomList)
-        plt.hist(self.binomList)
+    def graphSimulationResult(self):
+        sns.distplot(self.binomList, hist=False, label='Practic results')
         plt.show()
+        plt.title("Practic Histogram")
+        plt.hist(self.binomList, bins=50)
+        plt.show()
+
+    def graphProbabilityDensity(self):
+        r = range(1, 11)
+        p = list()
+        for i in r:
+            p.append((factorial(self.N) / (factorial(i) * factorial(self.N - i))) * (self.p**i) * ((1 - self.p)**(self.N - i)))
+        plt.title("Probability Density")
+        plt.vlines(r, ymin=p, ymax=0, colors="red")
+        plt.plot(r, p, 'g')
+        plt.show()
+
+    def graphIntegralProbabilityDensity(self):
+        x = range(1, 11)
+        p = list()
+        sumUni = 0
+        for i in x:
+            sumUni = sumUni + (factorial(self.N) / (factorial(i) * factorial(self.N - i))) * (self.p**i) * ((1 - self.p)**(self.N - i))
+            p.append(sumUni)
+        plt.title("Integral Probability Density")
+        plt.vlines(x, ymin=0, ymax=p, colors="red")
+        plt.plot(x, p, 'g')
+        plt.show()
+
 
 binomialDistBNL = BinomialDist(10000, 10, 0.5, "BNL")
 binomialDistBIN = BinomialDist(10000, 10, 0.5, "BIN")
 
 binomialDistBNL.outputResult(binomialDistBNL.binomList, binomialDistBIN.binomList)
 
-binomialDistBIN.graphHist()
-binomialDistBNL.graphHist()
+binomialDistBNL.graphSimulationResult()
+binomialDistBIN.graphSimulationResult()
+binomialDistBNL.graphProbabilityDensity()
+binomialDistBNL.graphIntegralProbabilityDensity()
+
