@@ -1,7 +1,6 @@
 import math
 from math import factorial
 import random
-
 import matplotlib.pyplot as plt
 from prettytable import PrettyTable
 from scipy.stats import binom
@@ -101,28 +100,10 @@ class BinomialDist():
         resultTable.add_row(["M = \n D = ", "%f\n%f" % (matExpecBNL, dispersionBNL), "%f\n%f" % (matExpecBIN, dispersionBIN), "%f\n%f" % (5, 2.5)])
         print(resultTable)
 
-    def graphBinomDist(self):
-        #  Практика
-        if (self.method == "BNL"):
-            binsPar = 11
-        elif (self.method == "BIN"):
-            binsPar = 10
-        fig, ax = plt.subplots(figsize=(14, 7))
-        sns.distplot(self.binomList, bins = binsPar, label='simulation results')
-        ax.set_xlabel("Number of Heads", fontsize=16)
-        ax.set_ylabel("Frequency", fontsize=16)
-
-        #  Теория
-        x = range(0, 10)
-        ax.plot(x, binom.pmf(x, 10, 0.5), 'ro', label='actual binomial distribution')
-        ax.vlines(x, 0, binom.pmf(x, 10, 0.5), colors='r', lw=5, alpha=0.5)
-        plt.legend()
-        plt.show()
-
     def graphSimulationResult(self):
-        sns.distplot(self.binomList, hist=False, label='Practic results')
+        sns.distplot(self.binomList, hist=False, label='Practic results ')
         plt.show()
-        plt.title("Practic Histogram")
+        plt.title("Practic Histogram"  + self.method)
         plt.hist(self.binomList, bins=50)
         plt.show()
 
@@ -147,16 +128,3 @@ class BinomialDist():
         plt.vlines(x, ymin=0, ymax=p, colors="red")
         plt.plot(x, p, 'g')
         plt.show()
-
-
-binomialDistBNL = BinomialDist(10000, 10, 0.5, "BNL")
-binomialDistBIN = BinomialDist(10000, 10, 0.5, "BIN")
-
-binomialDistBNL.outputResult(binomialDistBNL.binomList, binomialDistBIN.binomList)
-
-binomialDistBNL.graphSimulationResult()
-binomialDistBIN.graphSimulationResult()
-binomialDistBNL.graphProbabilityDensity()
-binomialDistBNL.graphIntegralProbabilityDensity()
-
-

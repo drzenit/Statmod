@@ -77,19 +77,3 @@ class LogarithmicDist():
         plt.vlines(x, ymin=0, ymax=p, colors="red")
         plt.plot(x, p, 'g')
         plt.show()
-
-
-n = 10000
-a = LogarithmicDist(n, 0.5)
-
-l = a.createLogList()
-
-matExpec = commonFunc.getMathematicalExpectation(l, n)
-print(l)
-print(matExpec)
-print(commonFunc.getDispersion(l, n, matExpec))
-
-a.outputResult()
-a.graphSimulationResult()
-a.graphProbabilityDensity()
-a.graphIntegralProbabilityDensity()

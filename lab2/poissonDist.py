@@ -127,7 +127,7 @@ class PoissonDist():
     def graphSimulationResult(self):
         sns.distplot(self.poissList, hist=False, label='Practic results')
         plt.show()
-        plt.title("Practic Histogram")
+        plt.title(("Practic Histogram" + self.method))
         plt.hist(self.poissList, bins=50)
         plt.show()
 
@@ -154,17 +154,3 @@ class PoissonDist():
         plt.vlines(x, ymin=0, ymax=p, colors="red")
         plt.plot(x, p, 'g')
         plt.show()
-
-poissonDistPSN = PoissonDist(10000, 10, "PSN")
-poissonDistPOI = PoissonDist(10000, 10, "SPEC")
-
-print(poissonDistPSN.poissList)
-
-
-poissonDistPOI.outputResult(poissonDistPOI.poissList, poissonDistPSN.poissList)
-
-poissonDistPOI.graphSimulationResult()
-poissonDistPSN.graphSimulationResult()
-poissonDistPSN.graphProbabilityDensity()
-poissonDistPSN.graphIntegralProbabilityDensity()
-

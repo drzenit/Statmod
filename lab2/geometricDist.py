@@ -84,7 +84,7 @@ class GeometricDist():
     def graphSimulationResult(self):
         sns.distplot(self.geomList, hist=False, label='Practic results')
         plt.show()
-        plt.title("Practic Histogram")
+        plt.title(("Practic Histogram" + self.method))
         plt.hist(self.geomList, bins=50)
         plt.show()
 
@@ -107,19 +107,3 @@ class GeometricDist():
         plt.vlines(x, ymin=0, ymax=p, colors="red")
         plt.plot(x, p, 'g')
         plt.show()
-
-
-geometricDist1 = GeometricDist(10000, 0.5, "1")
-geometricDist2 = GeometricDist(10000, 0.5, "2")
-geometricDist3 = GeometricDist(10000, 0.5, "3")
-
-geometricDist1.outputResult(geometricDist1.geomList, geometricDist2.geomList, geometricDist3.geomList)
-
-geometricDist1.graphSimulationResult()
-geometricDist2.graphSimulationResult()
-geometricDist3.graphSimulationResult()
-
-print(geometricDist2.geomList)
-
-geometricDist1.graphProbabilityDensity()
-geometricDist1.graphIntegralProbabilityDensity()

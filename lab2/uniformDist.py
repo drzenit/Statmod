@@ -62,11 +62,3 @@ class UniformDist:
         plt.vlines(x, ymin=0, ymax=p, colors="red")
         plt.plot(x, p, 'g')
         plt.show()
-
-
-uniformDist = UniformDist(10000, 1, 100)
-
-uniformDist.outputResult()
-uniformDist.graphSimulationResult()
-uniformDist.graphProbabilityDensity()
-uniformDist.graphIntegralProbabilityDensity()
