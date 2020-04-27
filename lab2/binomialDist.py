@@ -1,5 +1,7 @@
 import math
 from math import factorial
+import random
+
 import matplotlib.pyplot as plt
 from prettytable import PrettyTable
 from scipy.stats import binom
@@ -51,16 +53,6 @@ class BinomialDist():
             elif (M < 0):
                 return x
 
-    def IRNBIN(self, randNum: float):
-        P = self.bernFunc()
-        M = randNum
-        for x in range(11):
-            M = M - P[x]
-            if (M >= 0):
-                continue
-            elif (M < 0):
-                return x
-
     def createBinomList(self):
         binomList = list()
         if (self.method == "BNL"):
@@ -69,8 +61,8 @@ class BinomialDist():
                 if (IR != None):
                     binomList.append(IR)
         elif (self.method == "BIN"):
-            for i in self.numbList:
-                IR = self.IRNBIN(i)
+            for i in range(self.n):
+                IR = round(random.normalvariate(5, 2.5) + 0.5)
                 if (IR != None):
                     binomList.append(IR)
 
@@ -166,4 +158,5 @@ binomialDistBNL.graphSimulationResult()
 binomialDistBIN.graphSimulationResult()
 binomialDistBNL.graphProbabilityDensity()
 binomialDistBNL.graphIntegralProbabilityDensity()
+
 
