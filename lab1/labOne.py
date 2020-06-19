@@ -90,15 +90,17 @@ def outputResult():
 
 # Выполнение программы
 
-numbList = generateRandomList(10001)
-matExpec = getMathematicalExpectation(numbList, 10001)
-dispersion = getDispersion(numbList, matExpec, 10001)
+n = 10
+
+numbList = generateRandomList(n)
+matExpec = getMathematicalExpectation(numbList, n)
+dispersion = getDispersion(numbList, matExpec, n)
 deviation = getStandardDeviation(dispersion)
-autocorr = getAutocorrelation(numbList, matExpec, 10001)
+autocorr = getAutocorrelation(numbList, matExpec, n)
 
 graphProbabilityDensity(numbList)
 graphIntegralProbabilityDensity(numbList)
-grapgColerrogram(autocorr, (10000 - 1))
+grapgColerrogram(autocorr, (n - 2))
 
 outputResult()
 
