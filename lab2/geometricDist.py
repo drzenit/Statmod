@@ -3,7 +3,7 @@ from prettytable import PrettyTable
 import seaborn as sns
 import matplotlib.pyplot as plt
 
-from lab2 import commonFunc
+import commonFunc
 
 
 class GeometricDist():

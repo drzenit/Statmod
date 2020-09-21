@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 from prettytable import PrettyTable
 import seaborn as sns
 
-from lab2 import commonFunc
+import commonFunc
 
 
 class PoissonDist():

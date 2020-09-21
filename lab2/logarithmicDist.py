@@ -4,7 +4,7 @@ import seaborn as sns
 from prettytable import PrettyTable
 from scipy.special import beta
 
-from lab2 import commonFunc
+import commonFunc
 
 
 class LogarithmicDist():

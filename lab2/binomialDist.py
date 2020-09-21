@@ -6,7 +6,7 @@ from prettytable import PrettyTable
 from scipy.stats import binom
 import seaborn as sns
 
-from lab2 import commonFunc
+import commonFunc
 
 
 class BinomialDist():

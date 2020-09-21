@@ -1,4 +1,4 @@
-from lab2 import binomialDist, uniformDist, geometricDist, poissonDist, logarithmicDist
+import binomialDist, uniformDist, geometricDist, poissonDist, logarithmicDist
 
 
 n = 10000
